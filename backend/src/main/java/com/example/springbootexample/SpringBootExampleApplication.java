@@ -7,8 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
@@ -16,6 +14,7 @@ public class SpringBootExampleApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootExampleApplication.class, args);
+        System.out.println(" ----- SpringApplication started successfully ----- ");
     }
 
     @Bean
@@ -29,7 +28,7 @@ public class SpringBootExampleApplication {
 
             CustomerModel customerModel = new CustomerModel(
                     firstName + " " + lastName,
-                    firstName + "." + lastName+"@example.com",
+                    firstName + "." + lastName + "@example.com",
                     random.nextInt(16, 99)
             );
 
