@@ -169,6 +169,10 @@
                     </from>
                     <to>
                         <image>docker.io/${organization.name}/${project.artifactId}:${project.version}</image>
+                        <auth>
+                            <username>islamgadhendy</username>
+                            <password>dP@#s1111</password>
+                        </auth>
                         <tags>
                             <tag>latest</tag>
                         </tags>
