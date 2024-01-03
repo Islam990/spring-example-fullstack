@@ -18,7 +18,6 @@ jobs:
           POSTGRES_USER: amigoscode
           POSTGRES_PASSWORD: password
           POSTGRES_DB: customer
-          POSTGRES_MAX_CONNECTIONS: 200
         ports:
           - 5332:5432
         options: >-
