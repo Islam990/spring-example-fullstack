@@ -242,7 +242,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
         );
     }
 
- /* Decrease connection pools to work in gitHub actions */
+ /* Decrease Hikari connection pools to work in gitHub actions */
+
 
     //@Test
 //    void updateCustomerEmail() {
