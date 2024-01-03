@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:16.1
+        image: postgres:14.1
         env:
           POSTGRES_USER: amigoscode
           POSTGRES_PASSWORD: password
@@ -25,7 +25,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-          --max_connections=100
 
     defaults:
       run:
