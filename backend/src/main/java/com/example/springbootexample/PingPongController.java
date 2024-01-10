@@ -11,7 +11,7 @@ public class PingPongController {
 
     @GetMapping("/ping")
     public PingPong getPingPong() {
-        return new PingPong("Islam PingPong", 26);
+        return new PingPong("Islam PingPong", 70);
     }
 
 }
