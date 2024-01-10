@@ -2,7 +2,7 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "amigoscode-api",
+      "name": "islamgad_api",
       "image": "islamgadhendy/spring-boot-example:latest",
       "essential": true,
       "memory": 512,
@@ -15,7 +15,7 @@
       "environment": [
         {
           "name": "SPRING_DATASOURCE_URL",
-          "value": "jdbc:postgresql://awseb-e-hgqfn6inpw-stack-awsebrdsdatabase-5suxr2fklqus.cxywt25pe6xk.eu-north-1.rds.amazonaws.com:5432/customer"
+          "value": "jdbc:postgresql://awseb-e-k27s5rzwmf-stack-awsebrdsdatabase-vj0heqwvimh8.cnumkcoselrz.eu-north-1.rds.amazonaws.com:5432/customer"
         }
       ]
     }
