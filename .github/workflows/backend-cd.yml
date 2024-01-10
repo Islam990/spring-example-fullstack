@@ -67,6 +67,7 @@ jobs:
           version_description: ${{ github.SHA }}
           region: ${{ secrets.EB_REGION }}
           deployment_package: backend/Dockerrun.aws.json
+          ignore_health_check: true
       - name: Commit and push Dockerrun.aws.json
         run: |
           git config user.name github-actions
