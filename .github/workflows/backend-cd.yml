@@ -71,10 +71,10 @@ jobs:
           echo "Current directory:"
           pwd
           echo "Dockerrun.aws.json before updating tag"
-          cat ../Dockerrun.aws.json
-          sed -i -E 's_(amigoscode/amigoscode-api:)([^"]*)_\1'${{steps.build-number.outputs.BUILD_NUMBER}}'_' ../Dockerrun.aws.json
+          cat Dockerrun.aws.json
+          sed -i -E 's_(amigoscode/amigoscode-api:)([^"]*)_\1'${{steps.build-number.outputs.BUILD_NUMBER}}'_' Dockerrun.aws.json
           echo "Dockerrun.aws.json after updating tag"
-          cat ../Dockerrun.aws.json
+          cat Dockerrun.aws.json
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
@@ -90,7 +90,7 @@ jobs:
           version_label: ${{ steps.build-number.outputs.BUILD_NUMBER }}
           version_description: ${{ github.SHA }}
           region: ${{ secrets.EB_REGION }}
-          deployment_package: Dockerrun.aws.json
+          deployment_package: backend/Dockerrun.aws.json
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
@@ -100,7 +100,7 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add ../Dockerrun.aws.json
+          git add Dockerrun.aws.json
           git commit -m "Update Dockerrun.aws.json docker image with new tag ${{ steps.build-number.outputs.BUILD_NUMBER }}"
           git push
       - name: Send Slack Message
