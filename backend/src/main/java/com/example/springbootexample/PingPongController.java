@@ -6,12 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PingPongController {
 
+    private static int COUNTER = 0;
+
     record PingPong(String name, int result) {
     }
 
     @GetMapping("/ping")
     public PingPong getPingPong() {
-        return new PingPong("Islam PingPong", 70);
+        return new PingPong("Islam PingPong %S".formatted(++COUNTER), 70);
     }
 
 }
