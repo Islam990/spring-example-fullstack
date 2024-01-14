@@ -13,7 +13,7 @@ public class PingPongController {
 
     @GetMapping("/ping")
     public PingPong getPingPong() {
-        return new PingPong("Islam PingPong %S".formatted(++COUNTER), 70);
+        return new PingPong("Islam PingPong %S Hits".formatted(++COUNTER), 70);
     }
 
 }
