@@ -37,7 +37,8 @@ public class CustomerService {
         CustomerModel newCustomer = new CustomerModel(
                 customerRegisterRequest.name(),
                 customerRegisterRequest.email(),
-                customerRegisterRequest.age()
+                customerRegisterRequest.age(),
+                customerRegisterRequest.gender()
         );
 
         customerDAO.insertCustomer(newCustomer);
@@ -71,7 +72,7 @@ public class CustomerService {
 
             customerModel.setEmail(customerUpdateRequest.email());
             anyChange = true;
-        }else {
+        } else {
             customerModel.setEmail(null);
         }
 
@@ -79,8 +80,16 @@ public class CustomerService {
 
             customerModel.setAge(customerUpdateRequest.age());
             anyChange = true;
-        }else {
+        } else {
             customerModel.setAge(null);
+        }
+
+        if (customerUpdateRequest.gender() != null && !customerUpdateRequest.gender().equals(customerModel.getGender())) {
+
+            customerModel.setGender(customerUpdateRequest.gender());
+            anyChange = true;
+        } else {
+            customerModel.setGender(null);
         }
 
         if (!anyChange) {

@@ -31,7 +31,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
         CustomerModel customerModel = new CustomerModel(
                 FAKER.name().fullName(),
                 FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID(),
-                20
+                20,
+                "Male"
         );
         underTest.insertCustomer(customerModel);
 
@@ -50,7 +51,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
         CustomerModel customerModel = new CustomerModel(
                 FAKER.name().fullName(),
                 email,
-                20
+                20,
+                "Male"
         );
         underTest.insertCustomer(customerModel);
 
@@ -97,7 +99,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
         CustomerModel customerModel = new CustomerModel(
                 FAKER.name().fullName(),
                 email,
-                20
+                20,
+                "Male"
         );
 
         //When
@@ -116,7 +119,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
         CustomerModel customerModel = new CustomerModel(
                 FAKER.name().fullName(),
                 email,
-                20
+                20,
+                "Male"
         );
         underTest.insertCustomer(customerModel);
 
@@ -144,7 +148,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
         CustomerModel customerModel = new CustomerModel(
                 FAKER.name().fullName(),
                 email,
-                20
+                20,
+                "Male"
         );
         underTest.insertCustomer(customerModel);
 
@@ -183,7 +188,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
         CustomerModel customerModel = new CustomerModel(
                 FAKER.name().fullName(),
                 email,
-                20
+                20,
+                "Male"
         );
         underTest.insertCustomer(customerModel);
 
@@ -210,7 +216,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
         CustomerModel customerModel = new CustomerModel(
                 FAKER.name().fullName(),
                 email,
-                20
+                20,
+                "Male"
         );
         underTest.insertCustomer(customerModel);
 

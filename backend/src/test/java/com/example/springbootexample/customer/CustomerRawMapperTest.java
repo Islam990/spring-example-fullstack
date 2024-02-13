@@ -23,6 +23,7 @@ class CustomerRawMapperTest {
         when(resultSet.getString("name")).thenReturn("Islam");
         when(resultSet.getString("email")).thenReturn("islam.gad@Gmail.com");
         when(resultSet.getInt("age")).thenReturn(26);
+        when(resultSet.getString("gender")).thenReturn("Male");
 
         // When
         CustomerModel actual = customerRawMapper.mapRow(resultSet, 1);
@@ -32,7 +33,8 @@ class CustomerRawMapperTest {
                 1L,
                 "Islam",
                 "islam.gad@Gmail.com",
-                26
+                26,
+                "Male"
         );
 
         assertThat(actual).isEqualTo(expected);

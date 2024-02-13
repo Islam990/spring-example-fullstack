@@ -40,7 +40,8 @@ public class CustomerIT {
         CustomerRegisterRequest customerRegisterRequest = new CustomerRegisterRequest(
                 name,
                 email,
-                age
+                age,
+                "Male"
         );
 
         // Send a post request
@@ -68,7 +69,8 @@ public class CustomerIT {
         CustomerModel expected = new CustomerModel(
                 name,
                 email,
-                age
+                age,
+                "Male"
         );
 
 
@@ -111,7 +113,8 @@ public class CustomerIT {
         CustomerRegisterRequest customerRegisterRequest = new CustomerRegisterRequest(
                 name,
                 email,
-                age
+                age,
+                "Male"
         );
 
         // Send a post request
@@ -176,7 +179,8 @@ public class CustomerIT {
         CustomerRegisterRequest customerRegisterRequest = new CustomerRegisterRequest(
                 name,
                 email,
-                age
+                age,
+                "Male"
         );
 
         // Send a post request
@@ -212,7 +216,7 @@ public class CustomerIT {
 
         String newName = "TestUser";
         CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
-                newName, null, null
+                newName, null, null, null
         );
 
         // Update Customer
@@ -238,7 +242,7 @@ public class CustomerIT {
                 .getResponseBody();
 
         CustomerModel expected = new CustomerModel(
-                id, newName, email, age
+                id, newName, email, age, "Male"
         );
 
         assertThat(updatedCustomer).isEqualTo(expected);

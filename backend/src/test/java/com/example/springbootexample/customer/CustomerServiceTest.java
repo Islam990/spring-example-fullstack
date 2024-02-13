@@ -50,7 +50,8 @@ class CustomerServiceTest {
                 id,
                 "Islam",
                 "Islam@gmail.com",
-                26
+                26,
+                "Male"
         );
 
         when(customerDAO.selectCustomerByID(id)).thenReturn(Optional.of(customerModel));
@@ -88,7 +89,8 @@ class CustomerServiceTest {
         CustomerRegisterRequest customerRegisterRequest = new CustomerRegisterRequest(
                 "Islam",
                 customerEmail,
-                26
+                26,
+                "Male"
         );
 
         // When
@@ -120,7 +122,8 @@ class CustomerServiceTest {
         CustomerRegisterRequest customerRegisterRequest = new CustomerRegisterRequest(
                 "Islam",
                 customerEmail,
-                26
+                26,
+                "Male"
         );
 
         // When
@@ -177,7 +180,8 @@ class CustomerServiceTest {
                 id,
                 "Islam",
                 "Islam.gad@gmail.com",
-                26
+                26,
+                "Male"
         );
         when(customerDAO.selectCustomerByID(id)).thenReturn(Optional.of(customerModel));
 
@@ -185,7 +189,8 @@ class CustomerServiceTest {
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 "Mohamed",
                 newEmail,
-                21
+                21,
+                "Male"
         );
         when(customerDAO.userEmailExists(newEmail)).thenReturn(false);
 
@@ -216,7 +221,8 @@ class CustomerServiceTest {
                 id,
                 "Islam",
                 "Islam.gad@gmail.com",
-                26
+                26,
+                "Male"
         );
         when(customerDAO.selectCustomerByID(id)).thenReturn(Optional.of(customerModel));
 
@@ -224,6 +230,7 @@ class CustomerServiceTest {
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 null,
                 newEmail,
+                null,
                 null
         );
         when(customerDAO.userEmailExists(newEmail)).thenReturn(false);
@@ -255,12 +262,14 @@ class CustomerServiceTest {
                 id,
                 "Islam",
                 "Islam.gad@gmail.com",
-                26
+                26,
+                "Male"
         );
         when(customerDAO.selectCustomerByID(id)).thenReturn(Optional.of(customerModel));
 
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 "Mohamed",
+                null,
                 null,
                 null
         );
@@ -292,14 +301,16 @@ class CustomerServiceTest {
                 id,
                 "Islam",
                 "Islam.gad@gmail.com",
-                26
+                26,
+                "Male"
         );
         when(customerDAO.selectCustomerByID(id)).thenReturn(Optional.of(customerModel));
 
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 null,
                 null,
-                21
+                21,
+                null
         );
 
         // When
@@ -320,6 +331,47 @@ class CustomerServiceTest {
 
     }
 
+
+    @Test
+    void canUpdateCustomerGender() {
+
+        // Given
+        long id = 10;
+        final CustomerModel customerModel = new CustomerModel(
+                id,
+                "Islam",
+                "Islam.gad@gmail.com",
+                26,
+                "Male"
+        );
+        when(customerDAO.selectCustomerByID(id)).thenReturn(Optional.of(customerModel));
+
+        final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
+                null,
+                null,
+                null,
+                "Female"
+        );
+
+        // When
+        underTest.updateCustomer(id, customerUpdateRequest);
+
+        // Then
+        ArgumentCaptor<CustomerModel> argumentCaptor = ArgumentCaptor.forClass(
+                CustomerModel.class
+        );
+
+        verify(customerDAO).updateCustomer(argumentCaptor.capture());
+
+        final CustomerModel updatedCustomer = argumentCaptor.getValue();
+
+        assertThat(updatedCustomer.getName()).isEqualTo(customerModel.getName());
+        assertThat(updatedCustomer.getEmail()).isEqualTo(customerModel.getEmail());
+        assertThat(updatedCustomer.getAge()).isEqualTo(customerModel.getAge());
+        assertThat(updatedCustomer.getGender()).isEqualTo(customerUpdateRequest.gender());
+
+    }
+
     @Test
     void willThrowExceptionWhenUpdateCustomerThatHaveEmailExists() {
 
@@ -329,7 +381,8 @@ class CustomerServiceTest {
                 id,
                 "Islam",
                 "Islam.gad@gmail.com",
-                26
+                26,
+                "Male"
         );
         when(customerDAO.selectCustomerByID(id)).thenReturn(Optional.of(customerModel));
 
@@ -337,7 +390,8 @@ class CustomerServiceTest {
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 "Mohamed",
                 newEmail,
-                21
+                21,
+                "Male"
         );
         when(customerDAO.userEmailExists(newEmail)).thenReturn(true);
 
@@ -360,14 +414,16 @@ class CustomerServiceTest {
                 id,
                 "Islam",
                 "Islam.gad@gmail.com",
-                26
+                26,
+                "Male"
         );
         when(customerDAO.selectCustomerByID(id)).thenReturn(Optional.of(customerModel));
 
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 customerModel.getName(),
                 customerModel.getEmail(),
-                customerModel.getAge()
+                customerModel.getAge(),
+                customerModel.getGender()
         );
 
         // When

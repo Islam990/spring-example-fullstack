@@ -40,21 +40,29 @@ public class CustomerModel {
     private Integer age;
 
 
+    @Column(
+            nullable = false
+    )
+    private String gender;
+
+
     public CustomerModel() {
     }
 
 
-    public CustomerModel(Long id, String name, String email, Integer age) {
+    public CustomerModel(Long id, String name, String email, Integer age, String gender) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.age = age;
+        this.gender = gender;
     }
 
-    public CustomerModel(String name, String email, Integer age) {
+    public CustomerModel(String name, String email, Integer age, String gender) {
         this.name = name;
         this.email = email;
         this.age = age;
+        this.gender = gender;
     }
 
     public Long getId() {
@@ -89,6 +97,14 @@ public class CustomerModel {
         this.age = age;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,7 +115,8 @@ public class CustomerModel {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        return age != null ? age.equals(that.age) : that.age == null;
+        if (age != null ? !age.equals(that.age) : that.age != null) return false;
+        return gender != null ? gender.equals(that.gender) : that.gender == null;
     }
 
     @Override
@@ -108,6 +125,7 @@ public class CustomerModel {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (age != null ? age.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
         return result;
     }
 
@@ -118,6 +136,7 @@ public class CustomerModel {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", age=" + age +
+                ", gender='" + gender + '\'' +
                 '}';
     }
 }

@@ -17,14 +17,16 @@ public class CustomerListDataAccessService implements CustomerDAO {
                 1l,
                 "Islam Gad",
                 "islam.gad@elswedy.com",
-                26
+                26,
+                "Male"
         );
 
         CustomerModel mohamed = new CustomerModel(
                 2l,
                 "Mohamed Gad",
                 "m.gad@gmail.com",
-                21
+                21,
+                "Female"
         );
 
         customerModelList.add(islam);

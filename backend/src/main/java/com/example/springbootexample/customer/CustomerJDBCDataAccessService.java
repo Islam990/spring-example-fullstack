@@ -40,14 +40,15 @@ public class CustomerJDBCDataAccessService implements CustomerDAO {
     @Override
     public void insertCustomer(CustomerModel customerModel) {
         var sql = """
-                INSERT INTO customer(name, email, age)
-                VALUES(?, ?, ?)
+                INSERT INTO customer(name, email, age, gender)
+                VALUES(?, ?, ?, ?)
                 """;
 
         int result = jdbcTemplate.update(sql,
                 customerModel.getName(),
                 customerModel.getEmail(),
-                customerModel.getAge());
+                customerModel.getAge(),
+                customerModel.getGender());
 
         System.out.println("Insert customer result = " + result);
     }
@@ -123,6 +124,19 @@ public class CustomerJDBCDataAccessService implements CustomerDAO {
 
             isUpdated = true;
             joiner.add("age");
+        }
+
+        if (customerModel.getGender() != null) {
+            var sql = """
+                    UPDATE customer SET gender = ? WHERE id = ?
+                    """;
+
+            jdbcTemplate.update(sql,
+                    customerModel.getGender(),
+                    customerModel.getId());
+
+            isUpdated = true;
+            joiner.add("gender");
         }
 
         if (isUpdated) {

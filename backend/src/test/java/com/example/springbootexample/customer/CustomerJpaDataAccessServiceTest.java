@@ -58,7 +58,8 @@ class CustomerJpaDataAccessServiceTest extends AbstractTestContainer {
                 1L,
                 "Islam",
                 "i.gad@Elswedy.com",
-                26
+                26,
+                "Male"
         );
 
         // When
@@ -119,7 +120,8 @@ class CustomerJpaDataAccessServiceTest extends AbstractTestContainer {
                 1L,
                 "Islam",
                 "i.gad@Elswedy.com",
-                26
+                26,
+                "Male"
         );
 
         // When

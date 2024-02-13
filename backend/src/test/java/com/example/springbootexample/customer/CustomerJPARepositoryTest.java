@@ -37,7 +37,8 @@ class CustomerJPARepositoryTest extends AbstractTestContainer {
         CustomerModel customerModel = new CustomerModel(
                 FAKER.name().fullName(),
                 email,
-                20
+                20,
+                "Male"
         );
 
         underTest.save(customerModel);
@@ -71,7 +72,8 @@ class CustomerJPARepositoryTest extends AbstractTestContainer {
         CustomerModel customerModel = new CustomerModel(
                 FAKER.name().fullName(),
                 email,
-                20
+                20,
+                "Male"
         );
         underTest.save(customerModel);
 
