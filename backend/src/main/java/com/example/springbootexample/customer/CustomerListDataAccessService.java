@@ -16,7 +16,7 @@ public class CustomerListDataAccessService implements CustomerDAO {
         CustomerModel islam = new CustomerModel(
                 1l,
                 "Islam Gad",
-                "islam.gad@elswedy.com",
+                "password", "islam.gad@elswedy.com",
                 26,
                 "Male"
         );
@@ -24,7 +24,7 @@ public class CustomerListDataAccessService implements CustomerDAO {
         CustomerModel mohamed = new CustomerModel(
                 2l,
                 "Mohamed Gad",
-                "m.gad@gmail.com",
+                "password", "m.gad@gmail.com",
                 21,
                 "Female"
         );
@@ -70,5 +70,12 @@ public class CustomerListDataAccessService implements CustomerDAO {
     @Override
     public void updateCustomer(CustomerModel customerModel) {
         customerModelList.add(customerModel);
+    }
+
+    @Override
+    public Optional<CustomerModel> getCustomerByEmail(String email) {
+        return customerModelList.stream()
+                .filter(customerModel -> customerModel.getEmail().equals(email))
+                .findFirst();
     }
 }

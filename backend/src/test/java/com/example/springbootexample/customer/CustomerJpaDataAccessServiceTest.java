@@ -57,7 +57,7 @@ class CustomerJpaDataAccessServiceTest extends AbstractTestContainer {
         CustomerModel customerModel = new CustomerModel(
                 1L,
                 "Islam",
-                "i.gad@Elswedy.com",
+                "password", "i.gad@Elswedy.com",
                 26,
                 "Male"
         );
@@ -119,7 +119,7 @@ class CustomerJpaDataAccessServiceTest extends AbstractTestContainer {
         CustomerModel customerModel = new CustomerModel(
                 1L,
                 "Islam",
-                "i.gad@Elswedy.com",
+                "password", "i.gad@Elswedy.com",
                 26,
                 "Male"
         );

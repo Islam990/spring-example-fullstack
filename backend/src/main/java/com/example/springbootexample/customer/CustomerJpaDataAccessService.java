@@ -49,4 +49,8 @@ public class CustomerJpaDataAccessService implements CustomerDAO {
         customerJPARepository.save(customerModel);
     }
 
+    @Override
+    public Optional<CustomerModel> getCustomerByEmail(String email) {
+        return customerJPARepository.findByEmail(email);
+    }
 }

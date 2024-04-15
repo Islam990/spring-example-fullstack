@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -24,9 +25,15 @@ class CustomerServiceTest {
     @Mock
     private CustomerDAO customerDAO;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    private final CustomerModelDTOMapper customerModelDTOMapper = new CustomerModelDTOMapper();
+
+
     @BeforeEach
     void setUp() {
-        underTest = new CustomerService(customerDAO);
+        underTest = new CustomerService(customerDAO, passwordEncoder, customerModelDTOMapper);
     }
 
     @Test
@@ -49,18 +56,20 @@ class CustomerServiceTest {
         CustomerModel customerModel = new CustomerModel(
                 id,
                 "Islam",
-                "Islam@gmail.com",
+                "password", "Islam@gmail.com",
                 26,
                 "Male"
         );
 
         when(customerDAO.selectCustomerByID(id)).thenReturn(Optional.of(customerModel));
 
+        CustomerModelDTO expected = customerModelDTOMapper.apply(customerModel);
+
         // When
-        final CustomerModel actual = underTest.getCustomer(id);
+        final CustomerModelDTO actual = underTest.getCustomer(id);
 
         // Then
-        assertThat(actual).isEqualTo(customerModel);
+        assertThat(actual).isEqualTo(expected);
 
     }
 
@@ -88,10 +97,13 @@ class CustomerServiceTest {
 
         CustomerRegisterRequest customerRegisterRequest = new CustomerRegisterRequest(
                 "Islam",
-                customerEmail,
+                "password", customerEmail,
                 26,
                 "Male"
         );
+
+        String hashedPassword = "$%#@%^&FHF--)";
+        when(passwordEncoder.encode(customerRegisterRequest.password())).thenReturn(hashedPassword);
 
         // When
         underTest.insertCustomer(customerRegisterRequest);
@@ -109,6 +121,7 @@ class CustomerServiceTest {
         assertThat(actual.getEmail()).isEqualTo(customerRegisterRequest.email());
         assertThat(actual.getName()).isEqualTo(customerRegisterRequest.name());
         assertThat(actual.getAge()).isEqualTo(customerRegisterRequest.age());
+        assertThat(actual.getPassword()).isEqualTo(hashedPassword);
 
     }
 
@@ -121,7 +134,7 @@ class CustomerServiceTest {
 
         CustomerRegisterRequest customerRegisterRequest = new CustomerRegisterRequest(
                 "Islam",
-                customerEmail,
+                "password", customerEmail,
                 26,
                 "Male"
         );
@@ -179,7 +192,7 @@ class CustomerServiceTest {
         final CustomerModel customerModel = new CustomerModel(
                 id,
                 "Islam",
-                "Islam.gad@gmail.com",
+                "password", "Islam.gad@gmail.com",
                 26,
                 "Male"
         );
@@ -189,8 +202,7 @@ class CustomerServiceTest {
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 "Mohamed",
                 newEmail,
-                21,
-                "Male"
+                21
         );
         when(customerDAO.userEmailExists(newEmail)).thenReturn(false);
 
@@ -220,7 +232,7 @@ class CustomerServiceTest {
         final CustomerModel customerModel = new CustomerModel(
                 id,
                 "Islam",
-                "Islam.gad@gmail.com",
+                "password", "Islam.gad@gmail.com",
                 26,
                 "Male"
         );
@@ -230,7 +242,6 @@ class CustomerServiceTest {
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 null,
                 newEmail,
-                null,
                 null
         );
         when(customerDAO.userEmailExists(newEmail)).thenReturn(false);
@@ -261,7 +272,7 @@ class CustomerServiceTest {
         final CustomerModel customerModel = new CustomerModel(
                 id,
                 "Islam",
-                "Islam.gad@gmail.com",
+                "password", "Islam.gad@gmail.com",
                 26,
                 "Male"
         );
@@ -269,7 +280,6 @@ class CustomerServiceTest {
 
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 "Mohamed",
-                null,
                 null,
                 null
         );
@@ -300,7 +310,7 @@ class CustomerServiceTest {
         final CustomerModel customerModel = new CustomerModel(
                 id,
                 "Islam",
-                "Islam.gad@gmail.com",
+                "password", "Islam.gad@gmail.com",
                 26,
                 "Male"
         );
@@ -309,8 +319,7 @@ class CustomerServiceTest {
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 null,
                 null,
-                21,
-                null
+                21
         );
 
         // When
@@ -331,47 +340,6 @@ class CustomerServiceTest {
 
     }
 
-
-    @Test
-    void canUpdateCustomerGender() {
-
-        // Given
-        long id = 10;
-        final CustomerModel customerModel = new CustomerModel(
-                id,
-                "Islam",
-                "Islam.gad@gmail.com",
-                26,
-                "Male"
-        );
-        when(customerDAO.selectCustomerByID(id)).thenReturn(Optional.of(customerModel));
-
-        final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
-                null,
-                null,
-                null,
-                "Female"
-        );
-
-        // When
-        underTest.updateCustomer(id, customerUpdateRequest);
-
-        // Then
-        ArgumentCaptor<CustomerModel> argumentCaptor = ArgumentCaptor.forClass(
-                CustomerModel.class
-        );
-
-        verify(customerDAO).updateCustomer(argumentCaptor.capture());
-
-        final CustomerModel updatedCustomer = argumentCaptor.getValue();
-
-        assertThat(updatedCustomer.getName()).isEqualTo(customerModel.getName());
-        assertThat(updatedCustomer.getEmail()).isEqualTo(customerModel.getEmail());
-        assertThat(updatedCustomer.getAge()).isEqualTo(customerModel.getAge());
-        assertThat(updatedCustomer.getGender()).isEqualTo(customerUpdateRequest.gender());
-
-    }
-
     @Test
     void willThrowExceptionWhenUpdateCustomerThatHaveEmailExists() {
 
@@ -380,7 +348,7 @@ class CustomerServiceTest {
         final CustomerModel customerModel = new CustomerModel(
                 id,
                 "Islam",
-                "Islam.gad@gmail.com",
+                "password", "Islam.gad@gmail.com",
                 26,
                 "Male"
         );
@@ -390,8 +358,7 @@ class CustomerServiceTest {
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 "Mohamed",
                 newEmail,
-                21,
-                "Male"
+                21
         );
         when(customerDAO.userEmailExists(newEmail)).thenReturn(true);
 
@@ -413,7 +380,7 @@ class CustomerServiceTest {
         final CustomerModel customerModel = new CustomerModel(
                 id,
                 "Islam",
-                "Islam.gad@gmail.com",
+                "password", "Islam.gad@gmail.com",
                 26,
                 "Male"
         );
@@ -422,8 +389,7 @@ class CustomerServiceTest {
         final CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
                 customerModel.getName(),
                 customerModel.getEmail(),
-                customerModel.getAge(),
-                customerModel.getGender()
+                customerModel.getAge()
         );
 
         // When

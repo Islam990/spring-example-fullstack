@@ -13,6 +13,7 @@ public class CustomerRawMapper implements RowMapper<CustomerModel> {
         return new CustomerModel(
                 rs.getLong("id"),
                 rs.getString("name"),
+                rs.getString("password"),
                 rs.getString("email"),
                 rs.getInt("age"),
                 rs.getString("gender")

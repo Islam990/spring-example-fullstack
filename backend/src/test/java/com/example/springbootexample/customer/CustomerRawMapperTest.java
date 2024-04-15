@@ -32,6 +32,7 @@ class CustomerRawMapperTest {
         CustomerModel expected = new CustomerModel(
                 1L,
                 "Islam",
+                "password",
                 "islam.gad@Gmail.com",
                 26,
                 "Male"
